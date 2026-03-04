@@ -5,6 +5,7 @@
 char production[10][10], first[10][10], follow[10][10];
 char table[10][10][10];
 int n;
+FILE *fp;  // file pointer for output
 
 int main() {
     int i, j;
@@ -18,21 +19,41 @@ int main() {
         scanf("%s", production[i]);
     }
 
+    // Open file to save output
+    fp = fopen("ll_1.txt", "w");
+    if (fp == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
     printf("\nPredictive Parsing Table:\n");
+    fprintf(fp, "\nPredictive Parsing Table:\n");
 
     printf("\n-----------------------------\n");
     printf("Non-Terminal | Production\n");
     printf("-----------------------------\n");
+    fprintf(fp, "\n-----------------------------\n");
+    fprintf(fp, "Non-Terminal | Production\n");
+    fprintf(fp, "-----------------------------\n");
 
     for (i = 0; i < n; i++) {
         printf("     %c       |   %s\n", production[i][0], production[i]);
+        fprintf(fp, "     %c       |   %s\n", production[i][0], production[i]);
     }
 
     printf("-----------------------------\n");
+    fprintf(fp, "-----------------------------\n");
 
     printf("\nNOTE:\n");
     printf("1. If A → α and 'a' in FIRST(α), add A→α to M[A,a]\n");
     printf("2. If ε in FIRST(α), add A→α to M[A,b] for all b in FOLLOW(A)\n");
+
+    fprintf(fp, "\nNOTE:\n");
+    fprintf(fp, "1. If A → α and 'a' in FIRST(α), add A→α to M[A,a]\n");
+    fprintf(fp, "2. If ε in FIRST(α), add A→α to M[A,b] for all b in FOLLOW(A)\n");
+
+    fclose(fp);
+    printf("\nOutput saved to ll_1.txt\n");
 
     return 0;
 }
